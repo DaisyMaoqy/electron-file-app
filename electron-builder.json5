@@ -1,0 +1,77 @@
+// @see - https://www.electron.build/configuration/configuration
+{
+  "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
+  "appId": "com.example.daisyapp",
+  "asar": true,
+  "productName": "analysis-table",
+  "directories": {
+    "output": "release/${version}", // 打包文件输出到 release 目录
+  },
+  // 根图标配置（需要放在 build/ 目录,自动匹配各平台）
+  // "icon": "build/icon",  // 默认找 icon.icns / icon.ico / icon.png
+  "files": [
+    "dist",
+    "dist-electron"
+  ],
+  "mac": {
+    "target": [
+        {
+          "target": "dmg",
+          "arch": ["arm64"]
+        }
+      ],
+    "artifactName": "${productName}-Mac-${version}-Installer.${ext}",
+    // 跳过签名（仅用于开发测试）
+    "identity": null,  // 或直接注释掉 identity 配置
+    // "icon": "build/icon.icns",  // macOS 图标
+  },
+  // Windows 配置
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    // "icon": "build/icon.ico",  // Windows 图标
+    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
+  },
+  // NSIS（Windows 安装程序）配置
+  "nsis": {
+    "oneClick": false, // 是否一键安装
+    "perMachine": false, // 是否为所有用户安装
+    "allowToChangeInstallationDirectory": true, // 允许用户选择安装目录
+    "deleteAppDataOnUninstall": false, // 卸载时是否删除应用程序数据
+    "createDesktopShortcut": true,  // 创建桌面快捷方式
+    "createStartMenuShortcut": true,  // 创建开始菜单快捷方式
+  },
+  "linux": {
+    "target": [
+      "AppImage"
+    ],
+    // "icon": "build/icon.png",  // Linux 图标
+    "artifactName": "${productName}-Linux-${version}.${ext}"
+  },
+  // DMG（macOS 安装包）配置
+  dmg: {
+    "contents": [              // 安装窗口布局
+      {
+        x: 410,
+        y: 150,
+        type: 'link',
+        path: '/Applications'
+      },
+      {
+        x: 130,
+        y: 150,
+        type: 'file'
+      }
+    ],
+    "window": {
+      width: 540,
+      height: 380
+    }
+  }
+}
