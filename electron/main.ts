@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog } from 'electron'
+import { app, BrowserWindow, dialog, screen } from 'electron'
 // import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
@@ -27,8 +27,12 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 
 let win: BrowserWindow | null
 
 function createWindow() {
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize
+
   win = new BrowserWindow({
     icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
+    width: width, // 屏幕宽度
+    height: height, // 屏幕高度
     webPreferences: {
       // 使用 path.dirname 获取当前文件的上级目录
       preload: path.join(__dirname, 'preload.mjs'),
@@ -48,7 +52,8 @@ function createWindow() {
     // win.loadFile('dist/index.html')
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
-  showAlert()
+  // showAlert()
+  win.webContents.openDevTools() // 本地调试打开开发工具
 }
 
 // 在主进程事件中调用提示弹窗
