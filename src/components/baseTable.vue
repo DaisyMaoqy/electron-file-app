@@ -242,6 +242,8 @@ const formRefs = ref<Record<string, any>>({})
 const setFormRef = (key: string, el: any) => {
   if (el) {
     formRefs.value[key] = el
+  } else {
+    delete formRefs.value[key]
   }
 }
 
@@ -451,15 +453,15 @@ const batchValidateAllFields = async () => {
       if (!formInstance) continue
 
       try {
-        const error = await new Promise((resolve) => {
-          formInstance.validateField(field, (err: any) => resolve(err))
-        })
-        results.push({ rowIndex: i, field, error })
+        // 用 validateField 按字段校验
+        const isValid = await new Promise<boolean>((resolve) => { formInstance.validateField(field, (valid: boolean) => resolve(valid)) })
+        results.push({ rowIndex: i, field, isValid })
       } catch (e) {
         results.push({ rowIndex: i, field, error: e })
       }
     }
   }
+  console.log('batchValidateAllFields 结果:', results)
   return results
 }
 

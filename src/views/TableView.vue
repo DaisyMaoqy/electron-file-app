@@ -357,8 +357,14 @@ const handleClear = () => {
 const handleGetValidData = async () => {
   if (baseTableRef.value) {
     try {
-      const validData = await baseTableRef.value.getValidData()
-      console.log('校验通过，数据：', validData)
+      const validData = await baseTableRef.value.getTableData()
+      console.log('校验数据：', validData)
+      const validWholeData = await baseTableRef.value.validateTableData() // 校验全量数据
+      console.log('校验全量数据结果：', validWholeData)
+      if (!validWholeData) {
+        ElMessage.error('表格数据校验失败, 请检查字段是否填写正确')
+        return
+      }
       ElMessage.success('校验通过')
     } catch (e: any) {
       ElMessage.error(e?.message || '校验失败')
