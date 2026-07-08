@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import vueLogo from '../assets/vue.svg' 
 
 const count = ref(0)
 
@@ -10,7 +11,15 @@ const handleClick = () => {
 
 <template>
   <div class="home-container">
-    <h1>Vite + Vue</h1>
+    <div>
+    <a href="https://electron-vite.github.io" target="_blank">
+      <img src="/electron-vite.svg" class="logo" alt="Vite logo" />
+    </a>
+    <a href="https://vuejs.org/" target="_blank">
+      <img :src="vueLogo" class="logo vue" alt="Vue logo" />
+    </a>
+  </div>
+  <h1>Vite + Vue</h1>
 
     <div class="card">
       <el-button type="primary" @click="handleClick">点击弹出提示</el-button>
