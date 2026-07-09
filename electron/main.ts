@@ -1,10 +1,14 @@
-import { app, BrowserWindow, dialog, screen } from 'electron'
+import { app, BrowserWindow, 
+  // dialog,
+   screen } from 'electron'
 // import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 
 // const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+// 🚧PS：build时会检查未使用的导入或函数，需要注释完全才不会报错
 
 // The built directory structure
 //
@@ -57,16 +61,16 @@ function createWindow() {
 }
 
 // 在主进程事件中调用提示弹窗
-function showAlert() {
-    dialog.showMessageBox({
-        type: 'info',
-        title: '提示',
-        message: '这是一个来自主进程的系统原生弹窗。',
-        buttons: ['确定']
-    }).then((result) => {
-        console.log('用户点击了:', result.response);
-    });
-}
+// function showAlert() {
+//     dialog.showMessageBox({
+//         type: 'info',
+//         title: '提示',
+//         message: '这是一个来自主进程的系统原生弹窗。',
+//         buttons: ['确定']
+//     }).then((result) => {
+//         console.log('用户点击了:', result.response);
+//     });
+// }
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
